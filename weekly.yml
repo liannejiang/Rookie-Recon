@@ -1,0 +1,67 @@
+name: Weekly Digest
+
+on:
+  schedule:
+    # 週日 22:00 UTC = 週一 08:00 布里斯本（UTC+10，無日光節約）
+    # 注意：Actions 排程在尖峰時段可能延遲數十分鐘，非準點觸發。
+    - cron: "0 22 * * 0"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "執行模式"
+        type: choice
+        default: full
+        options:
+          - full          # 完整流程並推送 Discord
+          - preview       # 產生摘要並印出版面，不推送
+          - dry-run       # 只抓取與篩選，不呼叫 LLM
+          - check-feeds   # 只檢查 RSS 來源是否失效
+
+permissions:
+  contents: write # 寫回 archive/
+  models: read    # 呼叫 GitHub Models（免費推論的關鍵權限）
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run
+        env:
+          LLM_PROVIDER: github
+          # runner 內建的 token 已帶 models:read，不需另外建 secret
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # 若改用 Gemini：把 LLM_PROVIDER 設成 gemini 並加這個 secret
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          case "${{ inputs.mode || 'full' }}" in
+            check-feeds) python -m src.main --check-feeds ;;
+            dry-run)     python -m src.main --dry-run -v ;;
+            preview)     python -m src.main --preview -v ;;
+            *)           python -m src.main -v ;;
+          esac
+
+      - name: Commit archive
+        if: ${{ (inputs.mode || 'full') == 'full' }}
+        run: |
+          git config user.name  "rookie-recon-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add archive/
+          if git diff --staged --quiet; then
+            echo "存檔無變動"
+          else
+            git commit -m "chore: 週報存檔 $(date -u +%Y-%m-%d)"
+            git push
+          fi
