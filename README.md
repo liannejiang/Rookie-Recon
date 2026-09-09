@@ -1,5 +1,5 @@
 # Rookie-Recon
-
+Welcome to Rookie Recon, we simply want to receive weekly cyber incidence report from many sites. Since I am from Taiwan, it provides English and Mandarin in one go.
 自動彙整每週資安大事，用 AI 產生**中英雙語**摘要，每週一早上 8:00（布里斯本時間）推送到 Discord。
 
 > Recon 取自 reconnaissance（偵察）。這個專案掃描的不是攻擊目標，而是公開的威脅情報來源。
@@ -111,6 +111,4 @@ src/
   main.py       主流程與 CLI
 archive/        每週存檔（自動 commit）
 ```
-=======
-Welcome to Rookie Recon, we simply want to receive weekly cyber incidence report from many sites. Since I am from Taiwan, it provides English and Mandarin in one go.
->>>>>>> 728108919552af7459b9fc9a71686897ceef9e22
+
