@@ -1,5 +1,4 @@
 # Rookie-Recon
-<<<<<<< HEAD
 
 自動彙整每週資安大事，用 AI 產生**中英雙語**摘要，每週一早上 8:00（布里斯本時間）推送到 Discord。
 
@@ -112,6 +111,3 @@ src/
   main.py       主流程與 CLI
 archive/        每週存檔（自動 commit）
 ```
-=======
-Welcome to Rookie Recon, we simply want to receive weekly cyber incidence report from many sites. Since I am from Taiwan, it provides English and Mandarin in one go.
->>>>>>> 728108919552af7459b9fc9a71686897ceef9e22
