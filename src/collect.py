@@ -11,6 +11,9 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 import feedparser
 
+import socket
+socket.setdefaulttimeout(20)
+
 log = logging.getLogger(__name__)
 
 # 常見的追蹤參數，去重前先移除，否則同一篇文章會被當成兩篇
