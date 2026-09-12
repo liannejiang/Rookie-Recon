@@ -14,6 +14,11 @@ import feedparser
 import socket
 socket.setdefaulttimeout(20)
 
+USER_AGENT = (
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+)
+
 log = logging.getLogger(__name__)
 
 # 常見的追蹤參數，去重前先移除，否則同一篇文章會被當成兩篇
@@ -88,7 +93,7 @@ def entry_time(entry) -> datetime | None:
 def fetch_source(source: dict, since: datetime) -> list[Item]:
     """抓單一來源。任何失敗都只記 log，不讓整批中斷。"""
     try:
-        feed = feedparser.parse(source["url"])
+        feed = feedparser.parse(source["url"], agent=USER_AGENT)    
     except Exception as exc:  # feedparser 很少 raise，但網路層可能會
         log.warning("抓取失敗 %s：%s", source["name"], exc)
         return []
@@ -185,7 +190,7 @@ def check_feeds(sources: list[dict]) -> int:
 
     for source in sources:
         try:
-            feed = feedparser.parse(source["url"])
+            feed = feedparser.parse(source["url"], agent=USER_AGENT)
         except Exception as exc:
             print(f"✗  {source['name']:<28} 連線失敗：{exc}")
             broken += 1

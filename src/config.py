@@ -6,17 +6,17 @@
 SOURCES = [
     # --- 官方通報 ---
     {
-        "name": "CISA Advisories",
-        "url": "https://www.cisa.gov/cybersecurity-advisories/all.xml",
-        "lang": "en",
-        "trust": 1.3,
-    },
-    {
-        "name": "ACSC Alerts (AU)",
-        "url": "https://www.cyber.gov.au/rss/news",
+        "name": "ASD / ACSC (AU)",
+        "url": "https://www.cyber.gov.au/about-us/news/rss",
         "lang": "en",
         "trust": 1.3,
         "region": "au",
+    },
+    {
+        "name": "CISA Current Activity",
+        "url": "https://us-cert.cisa.gov/ncas/current-activity.xml",
+        "lang": "en",
+        "trust": 1.3,
     },
     # --- 國際媒體 ---
     {
