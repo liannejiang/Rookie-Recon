@@ -4,20 +4,20 @@
 # trust: 來源加權（1.0 = 一般，1.3 = 官方通報）
 # region: "au" 的來源會額外加分（澳洲在地相關）
 SOURCES = [
-    # --- 官方通報 ---
-    {
-        "name": "ASD / ACSC (AU)",
-        "url": "https://www.cyber.gov.au/about-us/news/rss",
-        "lang": "en",
-        "trust": 1.3,
-        "region": "au",
-    },
-    {
-        "name": "CISA Current Activity",
-        "url": "https://us-cert.cisa.gov/ncas/current-activity.xml",
-        "lang": "en",
-        "trust": 1.3,
-    },
+    # # --- 官方通報 ---
+    # #{
+    #     "name": "ASD / ACSC (AU)",
+    #     "url": "https://www.cyber.gov.au/about-us/news/rss",
+    #     "lang": "en",
+    #     "trust": 1.3,
+    #     "region": "au",
+    # #},
+    # {
+    #     "name": "CISA Current Activity",
+    #     "url": "https://us-cert.cisa.gov/ncas/current-activity.xml",
+    #     "lang": "en",
+    #     "trust": 1.3,
+    # },
     # --- 國際媒體 ---
     {
         "name": "The Hacker News",
