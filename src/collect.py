@@ -10,7 +10,6 @@ from datetime import datetime, timedelta, timezone
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 import feedparser
-feedparser.PREFERRED_XML_PARSERS = []
 
 import socket
 socket.setdefaulttimeout(20)
