@@ -4,58 +4,31 @@
 # trust: 來源加權（1.0 = 一般，1.3 = 官方通報）
 # region: "au" 的來源會額外加分（澳洲在地相關）
 SOURCES = [
-    # # --- 官方通報 ---
-    # #{
-    #     "name": "ASD / ACSC (AU)",
-    #     "url": "https://www.cyber.gov.au/about-us/news/rss",
-    #     "lang": "en",
-    #     "trust": 1.3,
-    #     "region": "au",
-    # #},
-    # {
-    #     "name": "CISA Current Activity",
-    #     "url": "https://us-cert.cisa.gov/ncas/current-activity.xml",
-    #     "lang": "en",
-    #     "trust": 1.3,
-    # },
-    # --- 國際媒體 ---
-    {
-        "name": "The Hacker News",
-        "url": "https://feeds.feedburner.com/TheHackersNews",
-        "lang": "en",
-        "trust": 1.0,
-    },
-    {
-        "name": "BleepingComputer",
-        "url": "https://www.bleepingcomputer.com/feed/",
-        "lang": "en",
-        "trust": 1.1,
-    },
-    {
-        "name": "Krebs on Security",
-        "url": "https://krebsonsecurity.com/feed/",
-        "lang": "en",
-        "trust": 1.2,
-    },
-    {
-        "name": "The Record",
-        "url": "https://therecord.media/feed",
-        "lang": "en",
-        "trust": 1.1,
-    },
-    # --- 中文來源（第一版先不納入，之後想加就把註解拿掉）---
-    # {
-    #     "name": "iThome 資安",
-    #     "url": "https://www.ithome.com.tw/rss",
-    #     "lang": "zh",
-    #     "trust": 1.0,
-    # },
-    # {
-    #     "name": "TWCERT/CC",
-    #     "url": "https://www.twcert.org.tw/tw/rss-1.xml",
-    #     "lang": "zh",
-    #     "trust": 1.2,
-    # },
+    # --- 綜合新聞（已實測正常）---
+    {"name": "The Hacker News", "url": "https://feeds.feedburner.com/TheHackersNews",
+     "lang": "en", "trust": 1.0},
+    {"name": "BleepingComputer", "url": "https://www.bleepingcomputer.com/feed/",
+     "lang": "en", "trust": 1.1},
+    {"name": "Krebs on Security", "url": "https://krebsonsecurity.com/feed/",
+     "lang": "en", "trust": 1.2},
+    {"name": "The Record", "url": "https://therecord.media/feed/",
+     "lang": "en", "trust": 1.1},
+
+    # --- 待測 ---
+    {"name": "CERT-EU Advisories", "url": "https://cert.europa.eu/publications/security-advisories-rss",
+     "lang": "en", "trust": 1.3},
+    {"name": "Dark Reading", "url": "https://www.darkreading.com/rss.xml",
+     "lang": "en", "trust": 0.9},
+    {"name": "SANS ISC", "url": "https://isc.sans.edu/rssfeed_full.xml",
+     "lang": "en", "trust": 1.0},
+    {"name": "Zero Day Initiative", "url": "https://www.zerodayinitiative.com/rss/published/",
+     "lang": "en", "trust": 1.2},
+
+    # --- 暫時停用 ---
+    # ASD/ACSC：Akamai 對機房 IP 靜默丟棄，Actions 上無解
+    # {"name": "ASD / ACSC (AU)", "url": "https://www.cyber.gov.au/about-us/news/rss", ...},
+    # CISA：feed 本身 XML 第 10 行有未閉合標籤，解析中斷
+    # {"name": "CISA Current Activity", "url": "https://us-cert.cisa.gov/ncas/current-activity.xml", ...},
 ]
 
 # ---------------------------------------------------------------- 篩選權重
