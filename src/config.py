@@ -22,7 +22,7 @@ SOURCES = [
     {"name": "SANS ISC", "url": "https://isc.sans.edu/rssfeed_full.xml",
      "lang": "en", "trust": 1.0},
     {"name": "Zero Day Initiative", "url": "https://www.zerodayinitiative.com/rss/published/",
-     "lang": "en", "trust": 1.2},
+     "lang": "en", "trust": 0.85},
 
     # --- 暫時停用 ---
     # ASD/ACSC：Akamai 對機房 IP 靜默丟棄，Actions 上無解
@@ -35,10 +35,11 @@ SOURCES = [
 # 標題命中權重 3 倍，摘要命中權重 1 倍（見 rank.py）
 KEYWORD_WEIGHTS = {
     # 高嚴重度訊號
-    "zero-day": 5.0,
-    "0-day": 5.0,
+    "actively exploited": 7.0,
+    "in the wild": 6.0,
+    "exploited in the wild": 7.0,
+    "under attack": 5.0,
     "actively exploited": 5.0,
-    "in the wild": 4.0,
     "unauthenticated": 3.5,
     "remote code execution": 3.5,
     "rce": 3.0,
@@ -88,7 +89,8 @@ KEYWORD_WEIGHTS = {
 # 出現這些字通常是業配、產品發表、募資新聞，直接扣分
 NEGATIVE_KEYWORDS = {
     "webinar": -4.0,
-    "sponsored": -6.0,
+    "sponsored content": -6.0,
+    "sponsored by": -6.0,
     "press release": -4.0,
     "series a": -3.0,
     "series b": -3.0,
