@@ -93,7 +93,7 @@ def entry_time(entry) -> datetime | None:
 def fetch_source(source: dict, since: datetime) -> list[Item]:
     """抓單一來源。任何失敗都只記 log，不讓整批中斷。"""
     try:
-        feed = feedparser.parse(source["url"], agent=USER_AGENT)    
+        feed = feedparser.parse(source["url"])    
     except Exception as exc:  # feedparser 很少 raise，但網路層可能會
         log.warning("抓取失敗 %s：%s", source["name"], exc)
         return []
@@ -179,6 +179,16 @@ def collect(sources: list[dict], days: int) -> list[Item]:
     log.info("原始總計 %d 則", len(items))
     return dedupe(items)
 
+import requests
+
+def probe(url: str) -> str:
+    """直接看對方回了什麼，判斷是被擋還是 feed 真的壞掉。"""
+    try:
+        r = requests.get(url, timeout=20)
+        head = r.text[:120].replace("\n", " ")
+        return f"HTTP {r.status_code} · {r.headers.get('content-type','?')} · {head}"
+    except Exception as exc:
+        return f"連線失敗：{exc}"
 
 def check_feeds(sources: list[dict]) -> int:
     """
@@ -190,9 +200,10 @@ def check_feeds(sources: list[dict]) -> int:
 
     for source in sources:
         try:
-            feed = feedparser.parse(source["url"], agent=USER_AGENT)
+            feed = feedparser.parse(source["url"])
         except Exception as exc:
             print(f"✗  {source['name']:<28} 連線失敗：{exc}")
+            print(f"   └─ {probe(source['url'])}")
             broken += 1
             continue
 
@@ -202,9 +213,11 @@ def check_feeds(sources: list[dict]) -> int:
         if count == 0:
             note = feed.get("bozo_exception") or "無法解析或網址已失效"
             print(f"✗  {source['name']:<28} 0 則（{note}）")
+            print(f"   └─ {probe(source['url'])}")
             broken += 1
         elif dated == 0:
             print(f"!  {source['name']:<28} {count} 則，但都沒有日期欄位（無法篩時間）")
+            print(f"   └─ {probe(source['url'])}")
             broken += 1
         else:
             newest = max(
