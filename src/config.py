@@ -35,11 +35,11 @@ SOURCES = [
 # 標題命中權重 3 倍，摘要命中權重 1 倍（見 rank.py）
 KEYWORD_WEIGHTS = {
     # 高嚴重度訊號
+    "zero-day": 5.0,
+    "0-day": 5.0,
     "actively exploited": 7.0,
     "in the wild": 6.0,
-    "exploited in the wild": 7.0,
     "under attack": 5.0,
-    "actively exploited": 5.0,
     "unauthenticated": 3.5,
     "remote code execution": 3.5,
     "rce": 3.0,
@@ -110,7 +110,7 @@ CVE_MENTION_BOOST = 1.0   # 有明確 CVE 編號
 LOOKBACK_DAYS = 7         # 抓取範圍
 MAX_ITEMS = 10            # 最終送出的則數
 MIN_SCORE = 2.0           # 低於此分數即使不足 MAX_ITEMS 也不送
-MAX_PER_SOURCE = 3        # 單一來源最多幾則，避免被某家媒體洗版
+MAX_PER_SOURCE = 2        # 單一來源最多幾則，避免被某家媒體洗版
 
 # ---------------------------------------------------------------- LLM 供應商
 # 用環境變數 LLM_PROVIDER 切換，預設 github。兩家都是 OpenAI 相容介面，
